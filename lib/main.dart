@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterdemo/pages/home.dart';
 import 'package:flutterdemo/pages/carousel.dart';
 import 'package:flutterdemo/pages/rotate.dart';
+import 'package:flutterdemo/pages/animation.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         '/carousel': (BuildContext context) =>
             CarouselPage(title: 'carousel'),
         '/perspective': (BuildContext context) => PerspectivePage(),
+        '/animation': (BuildContext context) => AnimatedLogo(),
       },
     );
   }

@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutterdemo/constant/color.dart';
+import 'package:flutter/animation.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -12,8 +13,33 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   Offset _offset = Offset.zero;
+  Animation<double> animation;
+  AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = new AnimationController(
+        duration: const Duration(milliseconds: 2000), vsync: this);
+//    animation = new CurvedAnimation(parent: animationController, curve: Curves.fastOutSlowIn);
+    animation = new Tween(begin: 0.0, end: 300.0).animate(animationController)
+      ..addListener(() {
+        print('1变');
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          animationController.reverse();
+          print('2变');
+        } else if (status == AnimationStatus.dismissed) {
+          animationController.forward();
+          print('3变');
+        }
+      });
+    animationController.forward();
+//    animationController.repeat();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
   rowItemMaker(){
     return Expanded(
         flex: 1,
@@ -52,11 +83,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 ..rotateY(-0.01 * _offset.dx), // changed
               alignment: FractionalOffset.center,
               child: GestureDetector(
-                onPanUpdate: (details) =>
-                    setState(() => _offset += details.delta), //与屏幕接触并移动的指针再次移动
-//                onDoubleTap: () => setState(() => _offset = Offset.zero),
-                onDoubleTap: () => Navigator.pushNamed(context, '/perspective'),
-                onTap: () => setState(() => _offset = Offset.zero),
+//                onPanUpdate: (details) =>
+//                    setState(() => _offset += details.delta), //与屏幕接触并移动的指针再次移动
+                onDoubleTap: () => setState(() => _offset = Offset.zero),
+//                onDoubleTap: () => Navigator.pushNamed(context, '/animation'),
+                onTap: () => setState(() => _offset = Offset(300.0,0.0)),
                 child: Image.network("http://via.placeholder.com/350x150",
                     fit: BoxFit.fill),
               )
