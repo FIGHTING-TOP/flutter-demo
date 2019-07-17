@@ -19,10 +19,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (BuildContext context) =>
             MyHomePage(title: 'Flutter Demo Home Page'),
-        '/carousel': (BuildContext context) =>
-            CarouselPage(title: 'carousel'),
+        '/carousel': (BuildContext context) => CarouselPage(title: 'carousel'),
         '/perspective': (BuildContext context) => PerspectivePage(),
-        '/animation': (BuildContext context) => AnimatedLogo(),
+        '/animation': (BuildContext context) => CardAnimated(),
       },
     );
   }

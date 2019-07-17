@@ -18,7 +18,8 @@ class _MyHomePageState extends State<MyHomePage>
   Offset _offset = Offset.zero;
   Animation<double> animation;
   AnimationController animationController;
-  double offsetStartX = 1.0;
+  double offsetStartX = 1;
+  int delta = 26;
   bool rotateSign = true;
 
   @override
@@ -30,8 +31,8 @@ class _MyHomePageState extends State<MyHomePage>
     animation = new Tween(begin: 0.0, end: 300.0).animate(animationController)
       ..addListener(() {
         print('1变');
-        if(rotateSign){
-          offsetStartX += 12.0;
+        if (rotateSign) {
+          offsetStartX += delta;
           setState(() {
             _offset = Offset(offsetStartX, 0);
           });
@@ -43,8 +44,8 @@ class _MyHomePageState extends State<MyHomePage>
             print('stop');
             animationController.stop();
           }
-        }else{
-          offsetStartX -= 12.0;
+        } else {
+          offsetStartX -= delta;
           setState(() {
             _offset = Offset(offsetStartX, 0);
           });
@@ -92,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage>
             loop: false,
             itemCount: 3,
             pagination: new SwiperPagination(),
-            control: new SwiperControl(),
+//            control: new SwiperControl(),
           ),
         ));
   }
@@ -118,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage>
 //                onPanUpdate: (details) =>
 //                    setState(() => _offset += details.delta), //与屏幕接触并移动的指针再次移动
 //                onDoubleTap: () => setState(() => _offset = Offset.zero),
-                onDoubleTap: () => Navigator.pushNamed(context, '/perspective'),
+                onDoubleTap: () => Navigator.pushNamed(context, '/animation'),
                 onTap: () => animationController.repeat(),
                 child: Stack(
 //                  alignment: const Alignment(0, -0.8),
@@ -142,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage>
         ));
   }
 
-  Widget rowMaker () {
+  Widget rowMaker() {
     List<Widget> rowsList = List();
     for (int i = 0; i < 3; i++) {
       rowsList.add(rowItemMaker());
