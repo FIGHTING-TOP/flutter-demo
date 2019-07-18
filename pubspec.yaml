@@ -48,6 +48,9 @@ flutter:
   assets:
      - assets/img/cardElement.png
      - assets/img/glassesHead.png
+     - assets/img/glassesSmileHead.png
+     - assets/img/pinkArrow.png
+     - assets/img/blueArrow.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

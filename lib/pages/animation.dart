@@ -13,55 +13,59 @@ class _CardAnimatedState extends State<CardAnimated>
     with SingleTickerProviderStateMixin {
   Animation<double> animation;
   AnimationController animationController;
-  List rowItems1 = [
-    {'x': 200, 'y': 300},
-    {'x': 0, 'y': 300},
-    {'x': -200, 'y': 300}
-  ];
-  List rowItems2 = [
-    {'x': 200, 'y': 0},
-    {'x': 0, 'y': 0},
-    {'x': -200, 'y': 0}
-  ];
-  List rowItems3 = [
-    {'x': 200, 'y': -300},
-    {'x': 0, 'y': -300},
-    {'x': -200, 'y': 300}
-  ];
+
+//  List rowItems1 = [
+//    {'x': 200, 'y': 300},
+//    {'x': 0, 'y': 300},
+//    {'x': -200, 'y': 300}
+//  ];
+//  List rowItems2 = [
+//    {'x': 200, 'y': 0},
+//    {'x': 0, 'y': 0},
+//    {'x': -200, 'y': 0}
+//  ];
+//  List rowItems3 = [
+//    {'x': 200, 'y': -300},
+//    {'x': 0, 'y': -300},
+//    {'x': -200, 'y': 300}
+//  ];
   double xn = 200;
-  double yn = 220;
+  double yn = 143;
+  double cardWidth = 200;
+  double cardHeight = 143;
+  double cardMargin = 8;
   bool cardPlaySign = true;
 
   @override
   void initState() {
     super.initState();
     animationController = new AnimationController(
-        duration: const Duration(milliseconds: 1500), vsync: this);
+        duration: const Duration(milliseconds: 1200), vsync: this);
 //    animation = new CurvedAnimation(parent: animationController, curve: Curves.fastOutSlowIn);
     animation = new Tween(begin: 0.0, end: 300.0).animate(animationController)
       ..addListener(() {
-        print('1变');
+        print('run animation');
         if (cardPlaySign) {
           if (xn > 0) {
             setState(() {
-              xn -= 20;
+              xn -= cardWidth / 10;
             });
           } else {
-            if (yn > 0) {
+            if (yn > 0 && yn > cardHeight / 10) {
               setState(() {
-                yn -= 22;
+                yn -= cardHeight / 10;
               });
             }
           }
         } else {
-          if (xn < 200) {
+          if (xn < cardHeight - 3 * cardMargin) {
             setState(() {
-              xn += 20;
+              xn += (cardHeight - 3 * cardMargin) / 10;
             });
           } else {
-            if (yn < 220) {
+            if (yn-cardHeight / 10 < cardHeight) {
               setState(() {
-                yn += 22;
+                yn += cardHeight / 10;
               });
             }
           }
@@ -77,8 +81,8 @@ class _CardAnimatedState extends State<CardAnimated>
           print('forward done');
         } else if (status == AnimationStatus.dismissed) {
           setState(() {
-            xn = 200;
-            yn = 220;
+            xn = cardHeight - 3 * cardMargin;
+            yn = cardHeight + cardMargin;
             cardPlaySign = true;
           });
           print('reverse done');
@@ -110,7 +114,7 @@ class _CardAnimatedState extends State<CardAnimated>
           children: <Widget>[
             Container(
               color: Colors.white,
-              height: 700,
+              height: 485,
               child: Swiper(
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
@@ -162,8 +166,6 @@ class _CardAnimatedState extends State<CardAnimated>
 
   Widget rowItemMaker(x, y) {
     // x代表一行的第几个，y代表第几行
-    print(x);
-    print(y);
     double rx;
     double ry;
     if (x == 1) {
@@ -188,14 +190,17 @@ class _CardAnimatedState extends State<CardAnimated>
               transform: Matrix4.translationValues(rx, ry, 0),
               alignment: FractionalOffset.center,
               child: Container(
-                margin: EdgeInsets.only(right: 8, top: 8, left: x == 1 ? 8 : 0),
+                margin: EdgeInsets.only(
+                    right: cardMargin,
+                    top: cardMargin,
+                    left: x == 1 ? cardMargin : 0),
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(6)),
                   color: myBlueLighter,
                 ),
                 width: 200,
-                height: 220,
+                height: 143,
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: myBlueLight, width: 1.0),
@@ -212,12 +217,11 @@ class _CardAnimatedState extends State<CardAnimated>
                         child: Container(
                           alignment: Alignment.center,
                           child: Text(
-                              '体型偏胖',
+                            '体型偏胖',
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                              color: mainText
-                            ),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: mainText),
                           ),
                         ),
                       ),
