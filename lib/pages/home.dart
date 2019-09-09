@@ -22,6 +22,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   double cardWidth;
   double cardHeight;
+//  通过xn和yn来控制card的位置和动画
   double xn;
   double yn;
   double cardMargin = 6;
@@ -45,9 +46,9 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     if (cardWidth == null) {
       final size = MediaQuery.of(context).size;
-      cardWidth = size.width / 3;
+      cardWidth = size.width / 3.288;
       cardHeight = size.height / 4.5;
-      xn = cardWidth - cardMargin;
+      xn = cardWidth + cardMargin;
       yn = cardHeight + cardMargin;
     }
 
@@ -60,6 +61,9 @@ class _MyHomePageState extends State<MyHomePage>
         rowsList = List();
       } else {
         rowsList.add(cardItemMaker(i - 1, i % 3, (i / 3).ceil()));
+//        if(i==5){
+//          swiperContentList.add(Row(children: rowsList));
+//        }
       }
     }
     return new Scaffold(
@@ -106,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   void animationHandler() {
     print('run animation');
-    if (cardPlaySign) {
+    if (cardPlaySign) { // 分
       if (xn > 0 && xn > (cardWidth + cardMargin) / 10) {
         setState(() {
           xn -= (cardWidth + cardMargin) / 10;
@@ -118,13 +122,13 @@ class _MyHomePageState extends State<MyHomePage>
           });
         }
       }
-    } else {
-      if (xn < cardWidth - cardMargin) {
+    } else { // 收
+      if (xn < cardWidth + cardMargin && cardWidth + cardMargin > xn + (cardWidth + cardMargin) / 10) {
         setState(() {
-          xn += (cardHeight - cardMargin) / 10;
+          xn += (cardWidth + cardMargin) / 10;
         });
       } else {
-        if (yn < cardHeight + cardMargin) {
+        if (yn < cardHeight + cardMargin && cardHeight + cardMargin > yn + (cardHeight + cardMargin) / 10) {
           setState(() {
             yn += (cardHeight + cardMargin) / 10;
           });
@@ -144,8 +148,8 @@ class _MyHomePageState extends State<MyHomePage>
     } else if (status == AnimationStatus.dismissed) {
       cardPlaySign = true;
       setState(() {
-//        xn = cardWidth - cardMargin;
-//        yn = cardHeight + cardMargin;
+        xn = cardWidth + cardMargin;
+        yn = cardHeight + cardMargin;
       });
       print('reverse done');
     }
@@ -226,8 +230,7 @@ class _MyHomePageState extends State<MyHomePage>
       height: cardHeight,
       child: Text('这个是背面'),
     );
-    return Expanded(
-        flex: 1,
+    return Container(
         child: Transform(
             transform: Matrix4.translationValues(rx, ry, 0),
             alignment: FractionalOffset.center,
