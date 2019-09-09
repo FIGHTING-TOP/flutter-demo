@@ -48,6 +48,7 @@ class _MyHomePageState extends State<MyHomePage>
       final size = MediaQuery.of(context).size;
       cardWidth = size.width / 3.288;
       cardHeight = size.height / 4.5;
+      cardMargin = size.width / 50;
       xn = cardWidth + cardMargin;
       yn = cardHeight + cardMargin;
     }
@@ -75,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage>
             topWidget(),
             Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  padding: EdgeInsets.symmetric(horizontal: cardMargin*1.5),
                   child: Swiper(
                     itemBuilder: (BuildContext context, int index) {
                       return Column(
@@ -176,8 +177,8 @@ class _MyHomePageState extends State<MyHomePage>
     }
     final frontComponent = Container(
         margin: EdgeInsets.only(
-            right: x == 2 ? 0 : 6, top: y == 1 ? 0 : 6, left: x == 2 ? 0 : 6),
-        padding: EdgeInsets.all(6),
+            right: x == 2 ? cardMargin : 0, top: y == 1 ? 0 : cardMargin, left: x == 2 ? cardMargin : 0),
+        padding: EdgeInsets.all(cardMargin),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(6)),
           color: myBlueLighter,
@@ -220,8 +221,8 @@ class _MyHomePageState extends State<MyHomePage>
         ));
     final backComponent = Container(
       margin: EdgeInsets.only(
-          right: x == 2 ? 0 : 6, top: y == 1 ? 0 : 6, left: x == 2 ? 0 : 6),
-      padding: EdgeInsets.all(6),
+          right: x == 2 ? cardMargin : 0, top: y == 1 ? 0 : cardMargin, left: x == 2 ? cardMargin : 0),
+      padding: EdgeInsets.all(cardMargin),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(6)),
         color: myBlue,
