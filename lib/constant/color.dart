@@ -6,3 +6,5 @@ const myBlue = const Color(0xff66a0ee);
 const myBlueLighter = const Color(0xffE4EEFC);
 const myBlueLight = const Color(0xffBDD7F8);
 const warnPink = const Color(0xffFFE3D9);
+const scaffoldBackgroundColor = const Color(0xffDDDDDD);
+const warnTextColor = Color(0xffff4000);
