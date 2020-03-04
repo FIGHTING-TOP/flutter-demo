@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 //      home: MyHomePage(),
-      initialRoute: '/',
+      initialRoute: '/carousel',
       routes: {
         '/': (BuildContext context) =>
             MyHomePage(title: 'Flutter Demo Home Page'),
